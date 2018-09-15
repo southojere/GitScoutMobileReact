@@ -12,18 +12,21 @@ import { createBottomTabNavigator, createStackNavigator } from 'react-navigation
 
 export default createBottomTabNavigator({
   Search: { screen: Search },
-  Favourites: { screen: Favourites },
-  History: { screen: History }
+  History: { screen: History },
+  Favourites: { screen: Favourites }
 },
   {
     navigationOptions: ({ navigation }) => ({
+      showIcon: true, 
       tabBarIcon: ({ focused, tintColor }) => {
         const { routeName } = navigation.state;
         let iconName;
-        if (routeName === 'Home') {
+        if (routeName === 'Search') {
+          iconName = `ios-search${focused ? '' : '-outline'}`;
+        } else if (routeName === 'Favourites') {
+          iconName = `ios-star${focused ? '' : '-outline'}`;
+        }else if (routeName === 'History') {
           iconName = `ios-information-circle${focused ? '' : '-outline'}`;
-        } else if (routeName === 'Settings') {
-          iconName = `ios-options${focused ? '' : '-outline'}`;
         }
 
         // You can return any component that you like here! We usually use an
