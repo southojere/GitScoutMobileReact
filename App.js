@@ -5,27 +5,38 @@ import { StyleSheet, Text, View } from 'react-native';
 import Search from './Screens/Search'
 import Favourites from './Screens/Favourites'
 import History from './Screens/History'
+import SearchResults from './Screens/SearchResults'
 //navigation
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 
+//Navigation for search to searchResults
+
+const HomeStack = createStackNavigator({
+  Search: { screen: Search },
+  SearchResults: { screen: SearchResults },
+});
+
 
 export default createBottomTabNavigator({
-  Search: { screen: Search },
+  Search: { screen: HomeStack },
   History: { screen: History },
   Favourites: { screen: Favourites }
 },
   {
     navigationOptions: ({ navigation }) => ({
-      showIcon: true, 
+     
       tabBarIcon: ({ focused, tintColor }) => {
+        if(navigation.routeName == "SearchResults"){
+          return;
+        }
         const { routeName } = navigation.state;
         let iconName;
         if (routeName === 'Search') {
           iconName = `ios-search${focused ? '' : '-outline'}`;
         } else if (routeName === 'Favourites') {
           iconName = `ios-star${focused ? '' : '-outline'}`;
-        }else if (routeName === 'History') {
+        } else if (routeName === 'History') {
           iconName = `ios-information-circle${focused ? '' : '-outline'}`;
         }
 

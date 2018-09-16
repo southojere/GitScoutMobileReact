@@ -1,6 +1,9 @@
 import React from 'react';
-import { Text, StatusBar, TextInput, View, StyleSheet, Picker, Button } from 'react-native';
+import { View, StyleSheet, Picker, Button } from 'react-native';
+import { FormLabel, FormInput, Header } from 'react-native-elements'
 import { Constants } from 'expo';
+import {GitHub} from '../Model/GitHub'
+
 export default class Search extends React.Component {
 
     constructor(props) {
@@ -14,22 +17,17 @@ export default class Search extends React.Component {
 
     render() {
         return (
+
             <View style={styles.container}>
-                <TextInput
-                    style={styles.input}
-                    value={this.state.name}
-                    onChangeText={city => this.setState({ city })}
-                    ref={ref => { this._nameInput = ref }}
-                    placeholder="Region"
-                    autoFocus={true}
-                    autoCapitalize="words"
-                    autoCorrect={true}
-                    keyboardType="default"
-                    returnKeyType="next"
-                    onSubmitEditing={this._next}
-                    blurOnSubmit={false}
+                <Header
+                    backgroundColor="#201E23"
+                    centerComponent={{ text: 'Search', style: { color: '#fff' } }}
+                    rightComponent={{ icon: 'search', color: '#fff' }}
                 />
+                <FormLabel>Region</FormLabel>
+                <FormInput onChangeText={(e) => { this.setState({ city: e }) }} />
                 <Picker
+                    style={{ width: 500 }}
                     placeholder="Filter Results"
                     selectedValue={this.state.sortBy}
                     style={{ height: 50, width: 100 }}
@@ -50,10 +48,13 @@ export default class Search extends React.Component {
                     <Picker.Item label="30" value={30} />
                 </Picker>
                 <Button
-                    onPress={ ()=>{alert("//TODO")}}
+                    onPress={() => { 
+                        this.props.navigation.navigate('SearchResults');
+                        // GitHub.getUser();
+                    }}
                     title="Search"
-                    color="#841584"
-                    accessibilityLabel="Learn more about this purple button"
+                    color="#448CFF"
+                    style={{width:300}}
                 />
             </View>
         );
@@ -73,6 +74,9 @@ const styles = StyleSheet.create({
     description: {
         fontSize: 14,
         color: 'white',
+    },
+    picker: {
+        width: 200
     },
     input: {
         margin: 20,
