@@ -6,6 +6,12 @@ import {GitHub} from '../Model/GitHub'
 
 export default class Search extends React.Component {
 
+    static navigationOptions = {
+        title: 'Search',
+        color:"#201E23"
+      };
+    
+
     constructor(props) {
         super(props);
         this.state = {
@@ -19,11 +25,6 @@ export default class Search extends React.Component {
         return (
 
             <View style={styles.container}>
-                <Header
-                    backgroundColor="#201E23"
-                    centerComponent={{ text: 'Search', style: { color: '#fff' } }}
-                    rightComponent={{ icon: 'search', color: '#fff' }}
-                />
                 <FormLabel>Region</FormLabel>
                 <FormInput onChangeText={(e) => { this.setState({ city: e }) }} />
                 <Picker
