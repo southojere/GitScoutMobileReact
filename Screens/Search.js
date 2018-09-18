@@ -1,16 +1,15 @@
 import React from 'react';
 import { View, StyleSheet, Picker, Button } from 'react-native';
-import { FormLabel, FormInput, Header } from 'react-native-elements'
+import { FormLabel, FormInput } from 'react-native-elements'
 import { Constants } from 'expo';
-import {GitHub} from '../Model/GitHub'
 
 export default class Search extends React.Component {
 
     static navigationOptions = {
         title: 'Search',
-        color:"#201E23"
-      };
-    
+        color: "#201E23"
+    };
+
 
     constructor(props) {
         super(props);
@@ -26,13 +25,22 @@ export default class Search extends React.Component {
 
             <View style={styles.container}>
                 <FormLabel>Region</FormLabel>
-                <FormInput onChangeText={(e) => { this.setState({ city: e }) }} />
+                <FormInput autoCorrect={true} onChangeText={
+                    (e) => {
+                        this.setState({ city: e })
+                    }
+
+                } />
                 <Picker
                     style={{ width: 500 }}
                     placeholder="Filter Results"
                     selectedValue={this.state.sortBy}
                     style={{ height: 50, width: 100 }}
-                    onValueChange={(itemValue, itemIndex) => this.setState({ sortBy: itemValue })}>
+                    onValueChange={
+                        (itemValue, itemIndex) => {
+                            this.setState({ sortBy: itemValue })
+                        }
+                    }>
                     <Picker.Item label="Gists" value="gists" />
                     <Picker.Item label="Repositories" value="repos" />
                     <Picker.Item label="Followers" value="followers" />
@@ -41,7 +49,11 @@ export default class Search extends React.Component {
                 <Picker
                     selectedValue={this.state.numberResults}
                     style={{ height: 50, width: 100 }}
-                    onValueChange={(itemValue, itemIndex) => this.setState({ numberResults: itemValue })}>
+                    onValueChange={
+                        (itemValue, itemIndex) => {
+                            this.setState({ numberResults: itemValue })
+                        }
+                    }>
                     <Picker.Item label="1" value={1} />
                     <Picker.Item label="5" value={2} />
                     <Picker.Item label="10" value={10} />
@@ -49,13 +61,17 @@ export default class Search extends React.Component {
                     <Picker.Item label="30" value={30} />
                 </Picker>
                 <Button
-                    onPress={() => { 
-                        this.props.navigation.navigate('SearchResults');
+                    onPress={() => {
+                        this.props.navigation.navigate('SearchResults', {
+                            city: this.state.city,
+                            sortBy: this.state.sortBy,
+                            numberResults: this.state.numberResults
+                        });
                         // GitHub.getUser();
                     }}
                     title="Search"
                     color="#448CFF"
-                    style={{width:300}}
+                    style={{ width: 300 }}
                 />
             </View>
         );
