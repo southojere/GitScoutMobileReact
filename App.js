@@ -1,11 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 
 //Screens
-import Search from './Screens/Search'
-import Favourites from './Screens/Favourites'
-import History from './Screens/History'
-import SearchResults from './Screens/SearchResults'
+import Search from './src/Screens/Search'
+import Favourites from './src/Screens/Favourites'
+import History from './src/Screens/History'
+import SearchResults from './src/Screens/SearchResults'
+import UserProfile from './src/Screens/UserProfile'
 //navigation
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
@@ -15,6 +15,7 @@ import { createBottomTabNavigator, createStackNavigator } from 'react-navigation
 const HomeStack = createStackNavigator({
   Search: { screen: Search },
   SearchResults: { screen: SearchResults },
+  UserProfile: { screen: UserProfile}
 });
 
 

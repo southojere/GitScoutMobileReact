@@ -1,0 +1,5 @@
+Reducers are just pure functions that take the previous state and an action, and return the next state. 
+Remember to return new state objects, instead of mutating the previous state.
+
+Reducers where we change our state
+Reducers are just a function, with 2 parameters, the state and action
