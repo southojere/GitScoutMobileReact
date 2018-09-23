@@ -1,30 +1,56 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { FormLabel, FormInput, Header, Button } from 'react-native-elements'
+import { StyleSheet, ScrollView, View } from 'react-native';
+import { FormLabel, FormInput, Header, ListItem } from 'react-native-elements'
+//firebase get
+import { getFavourites } from '../Model/firebase';
 export default class Favourites extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            users: []
+        }
+        this.getFavourites();
+    }
+
+    /**
+     * Method waits retrieved favourited users from firebase.
+     * 
+     */
+    getFavourites = async () => {
+        let favUsers = await getFavourites();
+        this.setState({
+            users: favUsers
+        });
+    }
+
     render() {
         return (
             <View>
-                 <Header
+                <Header
                     backgroundColor="#201E23"
                     centerComponent={{ text: 'Favourites', style: { color: '#fff' } }}
                 />
-                 <Button
-                            buttonStyle={{
-                                backgroundColor: "rgba(92, 99,216, 1)",
-                                width: 300,
-                                height: 45,
-                                borderColor: "transparent",
-                                borderWidth: 0,
-                                borderRadius: 5
-                            }}
-                            onPress={() => {
-                                this.props.navigation.navigate('Search')
-                            }}
-                            title="search"
-                        />
-             </View>
+                <ScrollView>
+                    <View>
+                        {
+                            this.state.users.map((l, i) => (
+                                <ListItem
+                                    key={i}
+                                    // leftAvatar={{ source: { uri: l.avatar_url } }}
+                                    title={l.name}
+                                    subtitle={l.bio}
+                                    button onLongPress={
+                                        () => {
+                                            this.props.navigation.navigate('UserProfile', { username: l.login })
+                                        }
+                                    }
+                                />
+                            ))
+                        }
+                    </View>
+                </ScrollView>
+            </View>
         );
     }
-  }
-  
+}

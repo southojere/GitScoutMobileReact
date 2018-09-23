@@ -1,37 +1,17 @@
 import React from 'react';
 import { FlatList, View } from 'react-native';
 import { List, ListItem, Button } from 'react-native-elements'
-import { createStackNavigator } from 'react-navigation';
-
-const userList = [
-    {
-        name: 'Jeremy Southon',
-        company: 'PWH',
-        location: 'Durham, UK',
-        bio: 'I make videos on my favourite technologies. Go Angular!',
-        avatar_url: "https://avatars3.githubusercontent.com/u/20221621?v=4",
-        email: ''
-    },
-    {
-        name: 'Dan Ko',
-        company: 'Koe and Co.',
-        location: 'London, UK',
-        bio: 'I love open source!',
-        avatar_url: 'http://i.imgur.com/TzWcihb.png'
-    }
-]
-
+import { GitHub } from '../Model/GitHub'
+import { addUser } from '../Model/firebase';
 export default class SearchResults extends React.Component {
     baseUrl = 'https://api.github.com/search/users?q=location:';
-
     static navigationOptions = ({ navigation }) => {
         return {
             title: 'Search Results',
             color: "#201E23"
         }
     };
-
-    navigate;
+    git
     constructor(props) {
         super(props);
         this.state = {
@@ -41,16 +21,16 @@ export default class SearchResults extends React.Component {
             sortBy: this.props.navigation.getParam('sortBy', 'Followers'),
             numberResults: this.props.navigation.getParam('numberResults', 10)
         }
-        this.navigate = this.props.navigation;
+        this.git = new GitHub();
+        this.git.up();
     }
 
+    // Will call api to retrieve data on search
     componentWillMount(props) {
         this.fetchData();
     }
 
     fetchData = async () => {
-        // this.fetchUserData("southojere");
-
         let sortedUsersUrl = this.baseUrl + this.state.city + "+sort:" + this.state.sortBy + "+&per_page=" + this.state.numberResults;
         const response = await fetch(sortedUsersUrl);
         const json = await response.json();
@@ -82,47 +62,15 @@ export default class SearchResults extends React.Component {
                             title={l.login}
                             subtitle={l.id}
                             button onPress={
-                                () => this.props.navigation.navigate('UserProfile', { username: l.login })
+                                () => {
+                                    this.props.navigation.navigate('UserProfile', { username: l.login })
+                                }
                             }
                         />
                     ))
                 }
-                {/* <List>
-                    <FlatList
-                        data={this.state.Users}
-                        renderItem={this.renderRow}
-                        keyExtractor={item => item.username}
-                        key={key => item.username}
-                    />
-                </List> */}
-
             </View>
         );
-    }
-
-    renderRow({ item }) {
-        console.log("check: " + this.navigate);
-        return (
-            <View>
-                <ListItem
-                    roundAvatar
-                    title={item.login}
-                    subtitle={item.id}
-                    avatar={{ uri: item.avatar_url }}
-
-                    button onPress={
-                        () => this.props.navigation.navigate('UserProfile', { username: "southojere" })
-                    }
-
-                />
-                {/* <Button
-                    title='BUTTON'
-                    onPress={()=>{
-                        this.props.navigation.navigate('UserProfile', { username: "southojere" })
-                    }}
-                /> */}
-            </View>
-        )
     }
 
 }
