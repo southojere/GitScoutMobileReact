@@ -1,7 +1,6 @@
 import React from 'react';
-import { FlatList, View } from 'react-native';
+import { View,ScrollView } from 'react-native';
 import { List, ListItem, Button } from 'react-native-elements'
-import { GitHub } from '../Model/GitHub'
 import { addUser } from '../Model/firebase';
 export default class SearchResults extends React.Component {
     baseUrl = 'https://api.github.com/search/users?q=location:';
@@ -11,7 +10,6 @@ export default class SearchResults extends React.Component {
             color: "#201E23"
         }
     };
-    git
     constructor(props) {
         super(props);
         this.state = {
@@ -21,8 +19,7 @@ export default class SearchResults extends React.Component {
             sortBy: this.props.navigation.getParam('sortBy', 'Followers'),
             numberResults: this.props.navigation.getParam('numberResults', 10)
         }
-        this.git = new GitHub();
-        this.git.up();
+
     }
 
     // Will call api to retrieve data on search
@@ -53,23 +50,26 @@ export default class SearchResults extends React.Component {
     render() {
 
         return (
-            <View>
-                {
-                    this.state.Users.map((l, i) => (
-                        <ListItem
-                            key={i}
-                            leftAvatar={{ source: { uri: l.avatar_url } }}
-                            title={l.login}
-                            subtitle={l.id}
-                            button onPress={
-                                () => {
-                                    this.props.navigation.navigate('UserProfile', { username: l.login })
+
+            <ScrollView>
+                <View>
+                    {
+                        this.state.Users.map((l, i) => (
+                            <ListItem
+                                key={i}
+                                avatar={{uri:l.avatar_url}}
+                                title={l.login}
+                                subtitle={l.id}
+                                button onPress={
+                                    () => {
+                                        this.props.navigation.navigate('UserProfile', { username: l.login })
+                                    }
                                 }
-                            }
-                        />
-                    ))
-                }
-            </View>
+                            />
+                        ))
+                    }
+                </View>
+            </ScrollView>
         );
     }
 

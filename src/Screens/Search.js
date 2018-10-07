@@ -5,7 +5,7 @@ import { FormLabel, FormInput, Icon } from 'react-native-elements'
 //components
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: -1,
         backgroundColor: '#ecf0f1',
     },
     searchButton: {
@@ -16,6 +16,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#ecf0f1',
         padding: 100
+
+    },
+    optionInput: {
 
     }
 });
@@ -108,24 +111,32 @@ export default class Search extends React.Component {
                     }
 
                 } />
+
+                <FormLabel>Filter by</FormLabel>
                 <Picker
-                    style={{ width: 500 }}
                     placeholder="Filter Results"
                     selectedValue={this.state.sortBy}
-                    style={{ height: 50, width: 100 }}
+                    style={{
+                        marginLeft: 10
+                    }}
                     onValueChange={
                         (itemValue, itemIndex) => {
                             this.setState({ sortBy: itemValue })
                         }
                     }>
-                    <Picker.Item label="Gists" value="gists" />
+                    {/* <Picker.Item label="Gists" value="gists" /> */}
                     <Picker.Item label="Repositories" value="repos" />
                     <Picker.Item label="Followers" value="followers" />
-                    <Picker.Item label="Contributions" value="contribution" />
+                    {/* <Picker.Item label="Contributions" value="contribution" /> */}
                 </Picker>
+
+                <FormLabel>Number of results</FormLabel>
                 <Picker
+
                     selectedValue={this.state.numberResults}
-                    style={{ height: 50, width: 100 }}
+                    style={{
+                        marginLeft: 10
+                    }}
                     onValueChange={
                         (itemValue, itemIndex) => {
                             this.setState({ numberResults: itemValue })
@@ -148,7 +159,10 @@ export default class Search extends React.Component {
                     }}
                     title="Search"
                     color="#448CFF"
-                    style={{ width: 300 }}
+                    style={{ 
+                        // width: 300,
+                        marginLeft:10
+                     }}
                 />
             </View >
         );

@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, ScrollView, View } from 'react-native';
-import { FormLabel, FormInput, Header, ListItem } from 'react-native-elements'
+import { StyleSheet, ScrollView, View, Text } from 'react-native';
+import { Card, Avatar, Header, ListItem } from 'react-native-elements'
 //firebase get
 import { getFavourites } from '../Model/firebase';
 export default class Favourites extends React.Component {
@@ -35,17 +35,37 @@ export default class Favourites extends React.Component {
                     <View>
                         {
                             this.state.users.map((l, i) => (
-                                <ListItem
+                                // <ListItem
+                                //     key={i}
+                                //     // leftAvatar={{ source: { uri: l.avatar_url } }}
+                                //     title={l.name}
+                                //     avatar={{uri:l.avatar_url}}
+                                //     subtitle={l.bio}
+
+                                // button onPress={
+                                //     () => {
+                                //         this.props.navigation.navigate('UserProfile', { username: l.login })
+                                //     }
+                                // }
+                                // />
+                                <Card
                                     key={i}
-                                    // leftAvatar={{ source: { uri: l.avatar_url } }}
-                                    title={l.name}
-                                    subtitle={l.bio}
-                                    button onLongPress={
-                                        () => {
-                                            this.props.navigation.navigate('UserProfile', { username: l.login })
+                                >
+                                    <Avatar
+                                        medium
+                                        rounded
+                                        source={{ uri: l.avatar_url }}
+                                        activeOpacity={0.7}
+                                        button onPress={
+                                            () => {
+                                                this.props.navigation.navigate('UserProfile', { username: l.login })
+                                            }
                                         }
-                                    }
-                                />
+                                    />
+                                    <Text>{l.name}</Text>
+                                    <Text>{l.bio}</Text>
+                                    <Text>My note: {l.littleMessage}</Text>
+                                </Card>
                             ))
                         }
                     </View>

@@ -4,9 +4,10 @@ import { FormLabel, ListItem, Header } from 'react-native-elements'
 
 //firebase get
 import { getHistory } from '../Model/firebase';
-export default class Favourites extends React.Component {
+export default class History extends React.Component {
 
     constructor(props) {
+        console.log("Loaded History Page");
         super(props);
         this.state = {
             users: []
@@ -42,7 +43,8 @@ export default class Favourites extends React.Component {
                                     // leftAvatar={{ source: { uri: l.avatar_url } }}
                                     title={l.name}
                                     subtitle={l.bio}
-                                    button onLongPress={
+                                    avatar={{uri:l.avatar_url}}
+                                    button onPress={
                                         () => {
                                             this.props.navigation.navigate('UserProfile', { username: l.login })
                                         }
